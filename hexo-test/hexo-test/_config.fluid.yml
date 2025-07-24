@@ -1,0 +1,34 @@
+# 页脚
+footer:
+  # 页脚第一行文字，支持 HTML
+  content: ''
+  # 是否显示 Hexo 和 Fluid 的链接
+  powered: false
+  # 是否显示主题版本号
+  theme_version: false
+  # 是否显示网站运行时间
+  runtime: false
+  # 自定义页脚，支持 HTML
+  custom: ''
+
+# 评论系统
+comments:
+  enable: true
+  type: gitalk
+  gitalk:
+    client_id: # GitHub Application Client ID
+    client_secret: # GitHub Application Client Secret
+    repo: # GitHub repository
+    owner: # GitHub repository owner
+    admin: # GitHub repository owner and collaborators
+    language: zh-CN # Localization language
+    distraction_free_mode: false # Facebook-like distraction free mode
+    create_issue_manually: false # Create issue manually
+    id: location.pathname # The unique id of the page
+    number: -1 # The number of the issue
+    labels: # The labels of the issue
+    body: # The body of the issue
+    pagerDirection: last # Comment sorting direction
+    perPage: 10 # Number of comments per page
+    flipMoveOptions: # Comment list animation
+    enableHotKey: true # Enable hot key (cmd|ctrl + enter) submit comment 

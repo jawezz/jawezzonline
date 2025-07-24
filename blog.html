@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jawezz.online - 个人博客</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .hero {
+            padding-top: 120px; /* 为固定导航栏留出空间 */
+            height: auto;
+            min-height: 40vh;
+            background-image: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(231, 76, 60, 0.1) 100%);
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            transition: width 0.5s ease;
+        }
+        
+        .hero h1:hover::after {
+            width: 100%;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航区域 -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">JAWEZZ<span>.ONLINE</span></a>
+        </div>
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">首页</a></li>
+            <li><a href="#" class="active">博客</a></li>
+            <li><a href="#">项目</a></li>
+            <li><a href="#">关于</a></li>
+            <li><a href="#">联系</a></li>
+        </ul>
+        <div class="theme-toggle">
+            <i class="fas fa-moon"></i>
+        </div>
+    </nav>
+
+    <!-- 主区域 -->
+    <main>
+        <!-- 英雄区域 -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>思考与创造</h1>
+                <p>探索技术与艺术的边界，记录成长与思考的点滴</p>
+            </div>
+        </section>
+
+        <!-- 最新文章区域 -->
+        <section id="recent-posts" class="recent-posts">
+            <h2>最新文章</h2>
+            <div class="posts-grid">
+                <article class="post-card featured">
+                    <div class="post-thumbnail">
+                        <div class="placeholder-image">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">2024年6月20日</span>
+                            <span class="post-category">技术</span>
+                        </div>
+                        <h3>设计极简主义网站的要点与实践</h3>
+                        <p>探讨如何在保持网站功能性的同时，实现极简设计美学，让用户体验更加流畅...</p>
+                        <a href="#" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="post-card">
+                    <div class="post-thumbnail">
+                        <div class="placeholder-image">
+                            <i class="fas fa-code"></i>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">2024年6月15日</span>
+                            <span class="post-category">编程</span>
+                        </div>
+                        <h3>JavaScript中的函数式编程范式</h3>
+                        <p>函数式编程如何改变我们编写JavaScript代码的方式，以及它带来的好处...</p>
+                        <a href="#" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="post-card">
+                    <div class="post-thumbnail">
+                        <div class="placeholder-image">
+                            <i class="fas fa-pen"></i>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">2024年6月8日</span>
+                            <span class="post-category">随笔</span>
+                        </div>
+                        <h3>阅读如何塑造思维方式</h3>
+                        <p>探讨不同类型的阅读如何影响我们的思考模式，以及如何构建个人知识体系...</p>
+                        <a href="#" class="read-more">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+            <div class="view-all">
+                <a href="#" class="btn outline">查看所有文章</a>
+            </div>
+        </section>
+
+        <!-- 页脚区域 -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="index.html">JAWEZZ<span>.ONLINE</span></a>
+                </div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="#">博客</a></li>
+                        <li><a href="#">项目</a></li>
+                        <li><a href="#">关于</a></li>
+                        <li><a href="#">联系</a></li>
+                    </ul>
+                </div>
+                <div class="footer-copyright">
+                    <p>&copy; 2024 Jawezz.online. 保留所有权利。</p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- 回到顶部按钮 -->
+    <button id="back-to-top" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- 脚本 -->
+    <script src="js/main.js"></script>
+</body>
+</html> 

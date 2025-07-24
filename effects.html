@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视觉效果预览 - Jawezz.online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --text-light: #6c757d;
+            --card-bg: #fff;
+        }
+        
+        [data-theme="dark"] {
+            --primary-color: #1a1a2e;
+            --secondary-color: #4361ee;
+            --accent-color: #f72585;
+            --background-color: #121212;
+            --text-color: #f8f9fa;
+            --text-light: #adb5bd;
+            --card-bg: #1e1e24;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover, nav a.active {
+            color: var(--secondary-color);
+        }
+        
+        .theme-toggle {
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .page-title h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-title p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .effects-nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .effect-btn {
+            padding: 0.7rem 1.5rem;
+            background-color: var(--card-bg);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .effect-btn:hover, .effect-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .effects-container {
+            position: relative;
+            height: 500px;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .effect.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .effect-description {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+        }
+        
+        .effect-description h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link:hover {
+            color: var(--accent-color);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            color: var(--text-light);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 1. 渐变波浪动画样式 */
+        .waves-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            overflow: hidden;
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 100" xmlns="http://www.w3.org/2000/svg"><path d="M0 20 L50 25 L100 0 L150 25 L200 10 L250 30 L300 10 L350 35 L400 5 L450 20 L500 0 L550 25 L600 10 L650 30 L700 5 L750 25 L800 15 L850 30 L900 10 L950 25 L1000 0 L1050 20 L1100 10 L1150 30 L1200 15 L1200 100 L0 100 Z" fill="white" opacity="0.3"/></svg>');
+            background-size: 1200px 100px;
+            animation: wave-animation 10s linear infinite;
+        }
+        
+        .wave:nth-child(2) {
+            bottom: 10px;
+            opacity: 0.5;
+            animation: wave-animation 7s linear infinite;
+        }
+        
+        .wave:nth-child(3) {
+            bottom: 20px;
+            opacity: 0.2;
+            animation: wave-animation 5s linear infinite;
+        }
+        
+        @keyframes wave-animation {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-1200px);
+            }
+        }
+        
+        /* 2. 3D视差效果样式 */
+        .parallax-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            perspective: 1000px;
+            background-color: #1a1a2e;
+            overflow: hidden;
+        }
+        
+        .parallax-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s ease-out;
+        }
+        
+        .layer-1 {
+            z-index: 1;
+        }
+        
+        .layer-2 {
+            z-index: 2;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 60%;
+            margin: 0 auto;
+        }
+        
+        .layer-3 {
+            z-index: 3;
+        }
+        
+        .circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+        }
+        
+        .rectangle {
+            width: 200px;
+            height: 80px;
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
+            border-radius: 10px;
+        }
+        
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 120px solid #2ecc71;
+        }
+        
+        .parallax-text {
+            font-size: 5rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.1);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+        
+        /* 3. 打字机效果样式 */
+        .typewriter-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background-color: #2c3e50;
+            color: white;
+        }
+        
+        .typewriter {
+            font-size: 3rem;
+            font-weight: 700;
+            overflow: hidden;
+            border-right: 0.15em solid var(--secondary-color);
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 0.1em;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+        
+        @keyframes blink-caret {
+            from, to {
+                border-color: transparent;
+            }
+            50% {
+                border-color: var(--secondary-color);
+            }
+        }
+        
+        .typewriter-container p {
+            margin-top: 2rem;
+            opacity: 0;
+            animation: fadeIn 2s 3.5s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* 4. Morfing变形动画样式 */
+        .morphing-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+        }
+        
+        .morphing-shape {
+            width: 200px;
+            height: 200px;
+            background-color: var(--secondary-color);
+            animation: morph 8s ease infinite;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        }
+        
+        @keyframes morph {
+            0% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                background: linear-gradient(45deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            }
+            25% {
+                border-radius: 50% 50% 20% 80% / 25% 80% 20% 75%;
+            }
+            50% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+                background: linear-gradient(45deg, var(--accent-color) 0%, var(--secondary-color) 100%);
+            }
+            75% {
+                border-radius: 80% 20% 50% 50% / 75% 50% 50% 25%;
+            }
+            100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                background: linear-gradient(45deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            }
+        }
+        
+        /* 新增变形动画效果 */
+        .morph-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .morph-btn {
+            padding: 0.5rem 1rem;
+            background-color: var(--card-bg);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .morph-btn:hover, .morph-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 气泡效果 */
+        @keyframes bubble-morph {
+            0% {
+                border-radius: 50%;
+                transform: scale(1);
+                background: #4cc9f0;
+            }
+            25% {
+                transform: scale(1.05);
+            }
+            50% {
+                border-radius: 45% 55% 55% 45% / 45% 55% 45% 55%;
+                transform: scale(1.1);
+                background: #4361ee;
+            }
+            75% {
+                transform: scale(1.05);
+            }
+            100% {
+                border-radius: 50%;
+                transform: scale(1);
+                background: #4cc9f0;
+            }
+        }
+        
+        /* 心跳效果 */
+        @keyframes heartbeat-morph {
+            0% {
+                transform: scale(1);
+                background: #e63946;
+                border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            }
+            15% {
+                transform: scale(1.15);
+            }
+            30% {
+                transform: scale(1);
+            }
+            45% {
+                transform: scale(1.25);
+                background: #ff4d6d;
+            }
+            60% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1);
+                background: #e63946;
+                border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            }
+        }
+        
+        /* 几何变形 */
+        @keyframes geometry-morph {
+            0% {
+                border-radius: 0%;
+                transform: rotate(0deg);
+                background: #7209b7;
+            }
+            25% {
+                border-radius: 50% 0% 0% 0%;
+                transform: rotate(45deg);
+            }
+            50% {
+                border-radius: 50%;
+                transform: rotate(90deg);
+                background: #3a0ca3;
+            }
+            75% {
+                border-radius: 0% 0% 0% 50%;
+                transform: rotate(135deg);
+            }
+            100% {
+                border-radius: 0%;
+                transform: rotate(180deg);
+                background: #7209b7;
+            }
+        }
+        
+        /* 液体效果 */
+        @keyframes liquid-morph {
+            0% {
+                border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+                background: linear-gradient(45deg, #00b4d8, #0077b6);
+                transform: rotate(0deg) scale(1);
+            }
+            25% {
+                border-radius: 30% 70% 70% 30% / 30% 70% 30% 70%;
+                transform: rotate(5deg) scale(1.05);
+            }
+            50% {
+                border-radius: 50% 50% 20% 80% / 80% 20% 80% 20%;
+                background: linear-gradient(45deg, #0077b6, #00b4d8);
+                transform: rotate(0deg) scale(1.1);
+            }
+            75% {
+                border-radius: 80% 20% 30% 70% / 50% 60% 40% 50%;
+                transform: rotate(-5deg) scale(1.05);
+            }
+            100% {
+                border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%;
+                background: linear-gradient(45deg, #00b4d8, #0077b6);
+                transform: rotate(0deg) scale(1);
+            }
+        }
+        
+        /* 星爆效果 */
+        @keyframes starburst-morph {
+            0% {
+                transform: scale(0.9) rotate(0deg);
+                background: #ff9e00;
+                clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            }
+            25% {
+                transform: scale(1) rotate(45deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(90deg);
+                background: #ff7700;
+            }
+            75% {
+                transform: scale(1) rotate(135deg);
+            }
+            100% {
+                transform: scale(0.9) rotate(180deg);
+                background: #ff9e00;
+                clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            }
+        }
+        
+        /* 5. 微交互效果样式 */
+        .microinteraction-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--background-color);
+        }
+        
+        .interaction-demo {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 800px;
+        }
+        
+        .interaction-item {
+            width: 120px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .interaction-item i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        /* 悬停效果 */
+        .hover-effect:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hover-effect:hover i {
+            color: var(--secondary-color);
+            transform: scale(1.2);
+        }
+        
+        /* 点击效果 */
+        .click-effect:active {
+            transform: scale(0.9);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 波纹效果 */
+        .ripple-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .ripple-effect:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0) translate(-50%, -50%);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20) translate(-50%, -50%);
+                opacity: 0;
+            }
+        }
+        
+        /* 旋转效果 */
+        .rotate-effect:hover i {
+            transform: rotate(360deg);
+            transition: transform 0.5s ease;
+        }
+        
+        /* 颜色变化效果 */
+        .color-effect {
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            background-size: 200% 200%;
+            animation: gradientAnimation 5s ease infinite;
+        }
+        
+        .color-effect i {
+            color: white;
+        }
+        
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">JAWEZZ<span>.ONLINE</span></div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="blog.html">博客</a></li>
+                    <li><a href="effects.html" class="active">效果预览</a></li>
+                </ul>
+            </nav>
+            <div class="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </div>
+        </header>
+        
+        <div class="page-title">
+            <h1>视觉效果预览</h1>
+            <p>探索不同的视觉效果，为您的网站选择合适的风格</p>
+        </div>
+        
+        <div class="effects-nav">
+            <button class="effect-btn active" data-effect="waves">渐变波浪</button>
+            <button class="effect-btn" data-effect="parallax">3D视差</button>
+            <button class="effect-btn" data-effect="typewriter">打字机效果</button>
+            <button class="effect-btn" data-effect="morphing">变形动画</button>
+            <button class="effect-btn" data-effect="microinteraction">微交互反馈</button>
+        </div>
+        
+        <div class="effects-container">
+            <!-- 1. 渐变波浪动画 -->
+            <div class="effect waves active" id="waves">
+                <div class="waves-container">
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                </div>
+                <div class="effect-description">
+                    <h3>渐变波浪动画</h3>
+                    <p>流动的有机波浪效果，柔和而现代，可用于创意设计类网站，带来平静但不单调的视觉体验。</p>
+                </div>
+            </div>
+            
+            <!-- 2. 3D视差效果 -->
+            <div class="effect parallax" id="parallax">
+                <div class="parallax-container" id="parallax-container">
+                    <div class="parallax-layer layer-1">
+                        <div class="parallax-text">3D视差</div>
+                    </div>
+                    <div class="parallax-layer layer-2">
+                        <div class="circle"></div>
+                        <div class="rectangle"></div>
+                        <div class="triangle"></div>
+                    </div>
+                    <div class="parallax-layer layer-3">
+                        <h2 style="color: white; font-size: 2rem;">移动鼠标体验效果</h2>
+                    </div>
+                </div>
+                <div class="effect-description">
+                    <h3>3D视差效果</h3>
+                    <p>元素随鼠标移动产生深度感，前景、中景、背景以不同速度移动，给用户带来沉浸式的互动体验。</p>
+                </div>
+            </div>
+            
+            <!-- 3. 打字机/渐显文字效果 -->
+            <div class="effect typewriter" id="typewriter">
+                <div class="typewriter-container">
+                    <div class="typewriter">创意源于思考，设计改变生活</div>
+                    <p>文字逐字显示，模拟打字过程，适合强调重要信息或标语，吸引用户注意力。</p>
+                </div>
+                <div class="effect-description">
+                    <h3>打字机/渐显文字效果</h3>
+                    <p>文字逐字显示，模拟打字过程，可结合光标闪烁效果增强真实感，适合强调重要信息。</p>
+                </div>
+            </div>
+            
+            <!-- 4. Morfing变形动画 -->
+            <div class="effect morphing" id="morphing">
+                <div class="morphing-container">
+                    <div class="morph-controls">
+                        <button class="morph-btn active" data-morph="default">有机变形</button>
+                        <button class="morph-btn" data-morph="bubble">气泡效果</button>
+                        <button class="morph-btn" data-morph="heartbeat">心跳效果</button>
+                        <button class="morph-btn" data-morph="geometry">几何变形</button>
+                        <button class="morph-btn" data-morph="liquid">液体效果</button>
+                        <button class="morph-btn" data-morph="starburst">星爆效果</button>
+                    </div>
+                    <div class="morphing-shape"></div>
+                </div>
+                <div class="effect-description">
+                    <h3>Morfing变形动画</h3>
+                    <p>图形元素之间的平滑过渡和变形，创造出流畅、有机的视觉感受，适合展示品牌创意或技术实力。</p>
+                </div>
+            </div>
+            
+            <!-- 5. 微交互反馈动效 -->
+            <div class="effect microinteraction" id="microinteraction">
+                <div class="microinteraction-container">
+                    <h2 style="margin-bottom: 2rem">点击或悬停体验不同效果</h2>
+                    <div class="interaction-demo">
+                        <div class="interaction-item hover-effect">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="interaction-item click-effect">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="interaction-item ripple-effect" tabindex="0">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="interaction-item rotate-effect">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div class="interaction-item color-effect">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="effect-description">
+                    <h3>微交互反馈动效</h3>
+                    <p>元素对用户行为的细微动态反应，提升界面的趣味性和响应感，增强用户体验和操作反馈。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回首页</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 Jawezz.online. 保留所有权利。</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 主题切换
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.addEventListener('click', () => {
+                document.body.setAttribute('data-theme', 
+                    document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+                themeToggle.querySelector('i').classList.toggle('fa-moon');
+                themeToggle.querySelector('i').classList.toggle('fa-sun');
+            });
+            
+            // 效果切换
+            const effectBtns = document.querySelectorAll('.effect-btn');
+            const effects = document.querySelectorAll('.effect');
+            
+            effectBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const effectName = btn.getAttribute('data-effect');
+                    
+                    // 更新按钮状态
+                    effectBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // 更新效果显示
+                    effects.forEach(effect => {
+                        effect.classList.remove('active');
+                        if (effect.id === effectName) {
+                            effect.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // 3D视差效果
+            const parallaxContainer = document.getElementById('parallax-container');
+            const layers = document.querySelectorAll('.parallax-layer');
+            
+            parallaxContainer.addEventListener('mousemove', (e) => {
+                const x = e.clientX;
+                const y = e.clientY;
+                
+                const containerRect = parallaxContainer.getBoundingClientRect();
+                const containerCenterX = containerRect.left + containerRect.width / 2;
+                const containerCenterY = containerRect.top + containerRect.height / 2;
+                
+                const moveX = (x - containerCenterX) / 25;
+                const moveY = (y - containerCenterY) / 25;
+                
+                layers.forEach((layer, index) => {
+                    const depth = (index + 1) * 0.5;
+                    const translateX = moveX * depth;
+                    const translateY = moveY * depth;
+                    
+                    layer.style.transform = `translateX(${translateX}px) translateY(${translateY}px)`;
+                });
+            });
+            
+            // 重置3D视差效果
+            parallaxContainer.addEventListener('mouseleave', () => {
+                layers.forEach(layer => {
+                    layer.style.transform = 'translateX(0) translateY(0)';
+                });
+            });
+            
+            // 为微交互元素添加动态效果
+            document.querySelectorAll('.ripple-effect').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple');
+                    this.appendChild(ripple);
+                    
+                    const x = e.clientX - this.getBoundingClientRect().left;
+                    const y = e.clientY - this.getBoundingClientRect().top;
+                    
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 1000);
+                });
+            });
+            
+            // 为打字机效果添加循环重播功能
+            const typewriterText = document.querySelector('.typewriter');
+            const originalText = typewriterText.textContent;
+            let isAnimating = true;
+            
+            setInterval(() => {
+                if (!document.getElementById('typewriter').classList.contains('active')) {
+                    return;
+                }
+                
+                if (!isAnimating) {
+                    typewriterText.style.animation = 'none';
+                    setTimeout(() => {
+                        typewriterText.style.animation = 'typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite';
+                        isAnimating = true;
+                    }, 10);
+                }
+            }, 8000);
+            
+            typewriterText.addEventListener('animationend', (e) => {
+                if (e.animationName === 'typing') {
+                    isAnimating = false;
+                }
+            });
+            
+            // 设置变形动画效果选择器
+            const morphBtns = document.querySelectorAll('.morph-btn');
+            const morphShape = document.querySelector('.morphing-shape');
+            
+            morphBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const morphType = btn.getAttribute('data-morph');
+                    
+                    // 更新按钮状态
+                    morphBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // 移除所有动画
+                    morphShape.style.animation = 'none';
+                    
+                    // 应用选择的动画
+                    setTimeout(() => {
+                        switch(morphType) {
+                            case 'bubble':
+                                morphShape.style.animation = 'bubble-morph 6s ease infinite';
+                                break;
+                            case 'heartbeat':
+                                morphShape.style.animation = 'heartbeat-morph 2s ease infinite';
+                                break;
+                            case 'geometry':
+                                morphShape.style.animation = 'geometry-morph 8s linear infinite';
+                                break;
+                            case 'liquid':
+                                morphShape.style.animation = 'liquid-morph 10s ease infinite';
+                                break;
+                            case 'starburst':
+                                morphShape.style.animation = 'starburst-morph 5s ease infinite';
+                                break;
+                            default:
+                                morphShape.style.animation = 'morph 8s ease infinite';
+                        }
+                    }, 10);
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

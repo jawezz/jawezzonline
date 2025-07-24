@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jawezz.online</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #f9f6f1;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23a1a1a1' fill-opacity='0.08' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+            position: relative;
+        }
+        
+        /* 添加纸质纹理效果 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/png;base64,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");
+            background-repeat: repeat;
+            background-size: 50px 50px;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* 有机变形背景 */
+        .morphing-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .morph-shape {
+            position: absolute;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: morphAnimation 15s ease-in-out infinite alternate;
+            opacity: 0.6;
+        }
+        
+        .morph-shape:nth-child(1) {
+            top: -20%;
+            left: -10%;
+            width: 40%;
+            height: 40%;
+            animation-delay: 0s;
+            background: linear-gradient(45deg, rgba(52, 152, 219, 0.2), rgba(231, 76, 60, 0.2));
+        }
+        
+        .morph-shape:nth-child(2) {
+            top: 60%;
+            right: -10%;
+            width: 45%;
+            height: 45%;
+            animation-delay: -2s;
+            background: linear-gradient(45deg, rgba(155, 89, 182, 0.2), rgba(41, 128, 185, 0.2));
+        }
+        
+        .morph-shape:nth-child(3) {
+            bottom: -20%;
+            left: 30%;
+            width: 50%;
+            height: 50%;
+            animation-delay: -5s;
+            background: linear-gradient(45deg, rgba(46, 204, 113, 0.2), rgba(52, 152, 219, 0.2));
+        }
+        
+        .morph-shape:nth-child(4) {
+            top: 20%;
+            right: 20%;
+            width: 30%;
+            height: 30%;
+            animation-delay: -8s;
+            background: linear-gradient(45deg, rgba(241, 196, 15, 0.2), rgba(230, 126, 34, 0.2));
+        }
+        
+        /* 添加更多颜色的变形背景 */
+        .morph-shape:nth-child(5) {
+            top: 30%;
+            left: 10%;
+            width: 35%;
+            height: 35%;
+            animation-delay: -3s;
+            background: linear-gradient(45deg, rgba(142, 68, 173, 0.2), rgba(41, 128, 185, 0.2));
+        }
+        
+        .morph-shape:nth-child(6) {
+            bottom: 10%;
+            right: 30%;
+            width: 25%;
+            height: 25%;
+            animation-delay: -6s;
+            background: linear-gradient(45deg, rgba(22, 160, 133, 0.2), rgba(39, 174, 96, 0.2));
+        }
+        
+        .morph-shape:nth-child(7) {
+            top: 50%;
+            left: 40%;
+            width: 20%;
+            height: 20%;
+            animation-delay: -9s;
+            background: linear-gradient(45deg, rgba(243, 156, 18, 0.2), rgba(211, 84, 0, 0.2));
+        }
+        
+        .morph-shape:nth-child(8) {
+            top: 5%;
+            left: 55%;
+            width: 15%;
+            height: 15%;
+            animation-delay: -4s;
+            background: linear-gradient(45deg, rgba(231, 76, 60, 0.2), rgba(192, 57, 43, 0.2));
+        }
+        
+        @keyframes morphAnimation {
+            0% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                transform: rotate(0deg) scale(1);
+            }
+            25% {
+                border-radius: 50% 50% 20% 80% / 25% 80% 20% 75%;
+            }
+            50% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+                transform: rotate(5deg) scale(1.1);
+            }
+            75% {
+                border-radius: 80% 20% 50% 50% / 75% 50% 50% 25%;
+            }
+            100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                transform: rotate(-5deg) scale(0.95);
+            }
+        }
+        
+        .landing {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .landing-content {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            transform: translateY(-20px); /* 轻微上移 */
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(-20px);
+            }
+        }
+        
+        .landing h1 {
+            font-size: 6.5rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 修改悬浮按钮样式，仅在鼠标悬停时产生悬浮效果 */
+        .btn-enter {
+            display: inline-block;
+            margin-top: 4rem;
+            font-size: 1.2rem;
+            padding: 1.2rem 3.5rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .btn-enter:hover {
+            background-color: #2980b9;
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(41, 128, 185, 0.5);
+        }
+        
+        .btn-enter:active {
+            transform: translateY(-3px) scale(0.98);
+            box-shadow: 0 5px 15px rgba(41, 128, 185, 0.4);
+        }
+        
+        /* 增强的故障文本效果 */
+        .glitch {
+            position: relative;
+            color: var(--primary-color);
+            animation: glitch-skew 1s infinite linear alternate-reverse;
+            text-shadow: 
+                0 0 1px rgba(0, 0, 0, 0.2),
+                0 0 3px rgba(52, 152, 219, 0.3),
+                0 0 5px rgba(231, 76, 60, 0.1);
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--secondary-color);
+            clip: rect(44px, 9999px, 56px, 0);
+            animation: glitch-anim-1 5s infinite linear alternate-reverse;
+        }
+        
+        .glitch::after {
+            left: -2px;
+            text-shadow: 2px 0 var(--accent-color);
+            clip: rect(44px, 9999px, 66px, 0);
+            animation: glitch-anim-2 5s infinite linear alternate-reverse;
+        }
+        
+        @keyframes glitch-anim-1 {
+            0% { clip: rect(51px, 9999px, 18px, 0); }
+            5% { clip: rect(33px, 9999px, 6px, 0); }
+            10% { clip: rect(92px, 9999px, 94px, 0); }
+            15% { clip: rect(38px, 9999px, 10px, 0); }
+            20% { clip: rect(13px, 9999px, 36px, 0); }
+            25% { clip: rect(2px, 9999px, 53px, 0); }
+            30% { clip: rect(89px, 9999px, 25px, 0); }
+            35% { clip: rect(89px, 9999px, 45px, 0); }
+            40% { clip: rect(97px, 9999px, 95px, 0); }
+            45% { clip: rect(13px, 9999px, 28px, 0); }
+            50% { clip: rect(76px, 9999px, 100px, 0); }
+            55% { clip: rect(85px, 9999px, 92px, 0); }
+            60% { clip: rect(11px, 9999px, 54px, 0); }
+            65% { clip: rect(56px, 9999px, 59px, 0); }
+            70% { clip: rect(3px, 9999px, 52px, 0); }
+            75% { clip: rect(22px, 9999px, 35px, 0); }
+            80% { clip: rect(95px, 9999px, 29px, 0); }
+            85% { clip: rect(75px, 9999px, 71px, 0); }
+            90% { clip: rect(18px, 9999px, 1px, 0); }
+            95% { clip: rect(52px, 9999px, 31px, 0); }
+            100% { clip: rect(13px, 9999px, 13px, 0); }
+        }
+        
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(65px, 9999px, 91px, 0); }
+            5% { clip: rect(75px, 9999px, 71px, 0); }
+            10% { clip: rect(4px, 9999px, 8px, 0); }
+            15% { clip: rect(85px, 9999px, 25px, 0); }
+            20% { clip: rect(35px, 9999px, 56px, 0); }
+            25% { clip: rect(30px, 9999px, 68px, 0); }
+            30% { clip: rect(33px, 9999px, 20px, 0); }
+            35% { clip: rect(33px, 9999px, 71px, 0); }
+            40% { clip: rect(30px, 9999px, 88px, 0); }
+            45% { clip: rect(4px, 9999px, 41px, 0); }
+            50% { clip: rect(58px, 9999px, 53px, 0); }
+            55% { clip: rect(2px, 9999px, 96px, 0); }
+            60% { clip: rect(92px, 9999px, 37px, 0); }
+            65% { clip: rect(72px, 9999px, 55px, 0); }
+            70% { clip: rect(30px, 9999px, 59px, 0); }
+            75% { clip: rect(57px, 9999px, 72px, 0); }
+            80% { clip: rect(59px, 9999px, 33px, 0); }
+            85% { clip: rect(68px, 9999px, 98px, 0); }
+            90% { clip: rect(30px, 9999px, 88px, 0); }
+            95% { clip: rect(94px, 9999px, 37px, 0); }
+            100% { clip: rect(76px, 9999px, 87px, 0); }
+        }
+        
+        @keyframes glitch-skew {
+            0% { transform: skew(0deg); }
+            10% { transform: skew(0deg); }
+            11% { transform: skew(5deg); }
+            12% { transform: skew(0deg); }
+            20% { transform: skew(0deg); }
+            21% { transform: skew(-5deg); }
+            22% { transform: skew(0deg); }
+            40% { transform: skew(0deg); }
+            41% { transform: skew(-2deg); }
+            42% { transform: skew(0deg); }
+            45% { transform: skew(0deg); }
+            46% { transform: skew(3deg); }
+            47% { transform: skew(0deg); }
+            72% { transform: skew(0deg); }
+            73% { transform: skew(4deg); }
+            74% { transform: skew(0deg); }
+            100% { transform: skew(0deg); }
+        }
+        
+        /* 按钮闪烁效果 */
+        .btn-enter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent
+            );
+            animation: btn-shine 3s infinite;
+        }
+        
+        @keyframes btn-shine {
+            0% {
+                left: -100%;
+            }
+            20% {
+                left: 100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        
+        /* 闪烁光线效果 */
+        .lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            opacity: 0.4;
+            display: none; /* 隐藏线条 */
+        }
+        
+        .line {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background-color: var(--secondary-color);
+            opacity: 0;
+        }
+        
+        .line-1 {
+            top: 20%;
+            animation: line-animation 8s infinite;
+            animation-delay: 0s;
+        }
+        
+        .line-2 {
+            top: 40%;
+            animation: line-animation 8s infinite;
+            animation-delay: 2s;
+        }
+        
+        .line-3 {
+            top: 60%;
+            animation: line-animation 8s infinite;
+            animation-delay: 4s;
+        }
+        
+        .line-4 {
+            top: 80%;
+            animation: line-animation 8s infinite;
+            animation-delay: 6s;
+        }
+        
+        @keyframes line-animation {
+            0% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+        
+        /* 页面加载动画 */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f9f6f1;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23a1a1a1' fill-opacity='0.08' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .loader.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader-content {
+            text-align: center;
+        }
+        
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(52, 152, 219, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--secondary-color);
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* 按钮悬停粒子效果 */
+        .btn-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .btn-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        
+        .btn-particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 加载动画 -->
+    <div class="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+        </div>
+    </div>
+    
+    <!-- 有机变形背景 -->
+    <div class="morphing-background">
+        <div class="morph-shape"></div>
+        <div class="morph-shape"></div>
+        <div class="morph-shape"></div>
+        <div class="morph-shape"></div>
+        <div class="morph-shape"></div>
+        <div class="morph-shape"></div>
+        <div class="morph-shape"></div>
+        <div class="morph-shape"></div>
+    </div>
+    
+    <div class="landing">
+        <div class="lines">
+            <div class="line line-1"></div>
+            <div class="line line-2"></div>
+            <div class="line line-3"></div>
+            <div class="line line-4"></div>
+        </div>
+        
+        <div class="landing-content">
+            <h1 class="glitch" data-text="JAWEZZ.ONLINE">JAWEZZ.ONLINE</h1>
+            <div class="btn-container">
+                <div class="btn-particles"></div>
+                <a href="blog.html" class="btn-enter">进入博客</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 页面加载完成后隐藏加载动画
+        document.addEventListener('DOMContentLoaded', () => {
+            // 延迟一点时间以确保资源加载
+            setTimeout(() => {
+                document.querySelector('.loader').classList.add('hide');
+            }, 800);
+            
+            // 增加鼠标移动效果
+            document.addEventListener('mousemove', (e) => {
+                const title = document.querySelector('.glitch');
+                const { clientX, clientY } = e;
+                const moveX = (clientX - window.innerWidth / 2) * 0.005;
+                const moveY = (clientY - window.innerHeight / 2) * 0.005;
+                
+                title.style.transform = `translateX(${moveX}px) translateY(${moveY}px) skew(${moveX * 0.2}deg)`;
+                
+                // 让变形背景形状随鼠标移动
+                const shapes = document.querySelectorAll('.morph-shape');
+                shapes.forEach((shape, index) => {
+                    const depth = (index + 1) * 0.3;
+                    const translateX = moveX * depth * 3;
+                    const translateY = moveY * depth * 3;
+                    
+                    shape.style.transform = `translate(${translateX}px, ${translateY}px) rotate(${moveX}deg) scale(${1 + moveY * 0.01})`;
+                });
+            });
+            
+            // 按钮悬浮效果增强
+            const btnContainer = document.querySelector('.btn-container');
+            const btn = document.querySelector('.btn-enter');
+            const particlesContainer = document.querySelector('.btn-particles');
+            
+            btn.addEventListener('mouseenter', () => {
+                createBtnParticles();
+            });
+            
+            function createBtnParticles() {
+                particlesContainer.innerHTML = '';
+                const particleCount = 15;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'btn-particle';
+                    
+                    // 随机大小
+                    const size = Math.random() * 8 + 4;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // 随机位置
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+                    particle.style.left = `${x}%`;
+                    particle.style.top = `${y}%`;
+                    
+                    // 动画
+                    const duration = Math.random() * 1 + 0.5;
+                    const delay = Math.random() * 0.2;
+                    
+                    particle.style.animation = `
+                        particle-fade ${duration}s ease-out ${delay}s forwards,
+                        particle-move-${Math.floor(Math.random() * 4)} ${duration}s ease-out ${delay}s forwards
+                    `;
+                    
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            
+            // 添加按钮粒子动画
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes particle-fade {
+                    0% { opacity: 0; }
+                    10% { opacity: 0.8; }
+                    100% { opacity: 0; }
+                }
+                
+                @keyframes particle-move-0 {
+                    0% { transform: translate(0, 0); }
+                    100% { transform: translate(-20px, -20px); }
+                }
+                
+                @keyframes particle-move-1 {
+                    0% { transform: translate(0, 0); }
+                    100% { transform: translate(20px, -20px); }
+                }
+                
+                @keyframes particle-move-2 {
+                    0% { transform: translate(0, 0); }
+                    100% { transform: translate(-20px, 20px); }
+                }
+                
+                @keyframes particle-move-3 {
+                    0% { transform: translate(0, 0); }
+                    100% { transform: translate(20px, 20px); }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html> 
